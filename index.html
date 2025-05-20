@@ -12,11 +12,14 @@
       }
 
       .grid-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         width: 75vw;
         height: 90vh;
         max-width: 700px;
         max-height: 800px;
-        margin: 50px auto;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(4, 1fr);
@@ -71,7 +74,6 @@
     <script>
       const gridContainer = document.querySelector(".grid-container");
       const items = document.querySelectorAll(".grid-item");
-      let url = "";
       let isClicked = 0;
 
       items.forEach((item, index) => {
