@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      .grid-container {
+        width: 75vw;
+        height: 90vh;
+        max-width: 700px;
+        max-height: 800px;
+        margin: 50px auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 15px;
+      }
+      .grid-item {
+        border-radius: 20px;
+        background-size: cover;
+        background-position: center center;
+        filter: grayscale(1) opacity(0.6);
+        transition: all 0.7s ease-in-out;
+      }
+      .grid-item:hover {
+        filter: grayscale(0) opacity(1);
+        cursor: zoom-in;
+      }
+      .img_1 {
+        grid-area: 1 / 1 / 3 / 2;
+        background-image: url("/praca\ dyplomowa\ –-1.jpg");
+      }
+      .img_2 {
+        grid-area: 1 / 2 / 4 / 3;
+        background-image: url("zakladka\ wpis\(1\).jpg");
+      }
+      .img_3 {
+        grid-area: 1 / 3 / 2 / 4;
+        background-image: url("/okladka\ front\ 2.jpg");
+      }
+      .img_4 {
+        grid-area: 3 / 1 / 5 / 2;
+        background-image: url("/okladka\ front.jpg");
+      }
+      .img_5 {
+        grid-area: 2 / 3 / 4 / 4;
+        background-image: url("/okladka\(1\).jpg");
+      }
+      .img_6 {
+        grid-area: 4 / 2 / 4 / 4;
+        background-image: url("/snowfall-5\(1\).jpg");
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="grid-item img_1"></div>
+      <div class="grid-item img_2"></div>
+      <div class="grid-item img_3"></div>
+      <div class="grid-item img_4"></div>
+      <div class="grid-item img_5"></div>
+      <div class="grid-item img_6"></div>
+    </div>
+    <script>
+      const gridContainer = document.querySelector(".grid-container");
+      const items = document.querySelectorAll(".grid-item");
+      let url = "";
+      let isClicked = 0;
+
+      items.forEach((item, index) => {
+        items[index].onclick = () => {
+          if (!isClicked) {
+            let picture = document.createElement("div");
+            picture.innerHTML = items[index];
+            picture.style.position = "absolute";
+            picture.style.top = "50%";
+            picture.style.left = "50%";
+            picture.style.transform = "translate(-50%, -50%) scale(0.9)";
+            picture.classList.add(`img_${index + 1}`);
+            picture.classList.add(`picture`);
+            picture.style.opacity = "0";
+            document.body.appendChild(picture);
+            picture.innerText = "";
+            picture.style.width = "80vw";
+            picture.style.height = "80vh";
+            picture.style.transition = "all 2s ease-in-out";
+            picture.style.backgroundPosition = "center center";
+            picture.style.backgroundSize = "contain";
+            picture.style.backgroundRepeat = "no-repeat";
+            document.body.style.transition = "all 0.3s ease-in-out";
+            document.body.style.backgroundColor = "rgba(0,0,0,0.8)";
+            gridContainer.style.display = "none";
+            setTimeout(() => {
+              picture.style.opacity = "1";
+              picture.style.transform = "translate(-50%, -50%) scale(1)";
+              document.addEventListener("click", hidePicture);
+            }, 200);
+            isClicked = 1;
+          }
+        };
+      });
+
+      function hidePicture() {
+        let picture = document.querySelector(".picture");
+        document.body.style.transition = "all 1s ease-in-out";
+        document.body.style.backgroundColor = "rgba(0,0,0,0)";
+        picture.style.opacity = "0";
+
+        document.removeEventListener("click", hidePicture);
+        isClicked = 0;
+        setTimeout(() => {
+          picture.remove();
+          gridContainer.style.display = "grid";
+        }, 200);
+      }
+    </script>
+  </body>
+</html>
