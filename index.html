@@ -74,40 +74,52 @@
     <script>
       const gridContainer = document.querySelector(".grid-container");
       const items = document.querySelectorAll(".grid-item");
+      const styles = {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%) scale(0.9)",
+        opacity: "0",
+        width: "80vw",
+        height: "80vh",
+        transition: "all 2s ease-in-out",
+        backgroundPosition: "center center",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+      };
       let isClicked = 0;
 
       items.forEach((item, index) => {
         items[index].onclick = () => {
           if (!isClicked) {
             let picture = document.createElement("div");
-            picture.innerHTML = items[index];
-            picture.style.position = "absolute";
-            picture.style.top = "50%";
-            picture.style.left = "50%";
-            picture.style.transform = "translate(-50%, -50%) scale(0.9)";
             picture.classList.add(`img_${index + 1}`);
             picture.classList.add(`picture`);
-            picture.style.opacity = "0";
-            document.body.appendChild(picture);
-            picture.innerText = "";
-            picture.style.width = "80vw";
-            picture.style.height = "80vh";
-            picture.style.transition = "all 2s ease-in-out";
-            picture.style.backgroundPosition = "center center";
-            picture.style.backgroundSize = "contain";
-            picture.style.backgroundRepeat = "no-repeat";
+
+            for (let key in styles) {
+              picture.style[key] = styles[key];
+            }
             document.body.style.transition = "all 0.3s ease-in-out";
             document.body.style.backgroundColor = "rgba(0,0,0,0.8)";
             gridContainer.style.display = "none";
+            document.body.appendChild(picture);
+
             setTimeout(() => {
               picture.style.opacity = "1";
               picture.style.transform = "translate(-50%, -50%) scale(1)";
               document.addEventListener("click", hidePicture);
+              document.addEventListener("keyup", handleKeyup);
             }, 200);
             isClicked = 1;
           }
         };
       });
+
+      function handleKeyup(event) {
+        if (event.keyCode === 27 || event.code === "Escape") {
+          hidePicture();
+        }
+      }
 
       function hidePicture() {
         let picture = document.querySelector(".picture");
@@ -116,6 +128,7 @@
         picture.style.opacity = "0";
 
         document.removeEventListener("click", hidePicture);
+        document.removeEventListener("keyup", handleKeyup);
         isClicked = 0;
         setTimeout(() => {
           picture.remove();
