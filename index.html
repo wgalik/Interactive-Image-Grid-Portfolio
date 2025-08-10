@@ -78,10 +78,10 @@
       const gridContainer = document.querySelector(".grid-container");
       const items = document.querySelectorAll(".grid-item");
       const styles = {
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%) scale(0.9)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        transform: "scale(0.9)",
         opacity: "0",
         width: "80vw",
         height: "80vh",
@@ -90,7 +90,6 @@
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
       };
-      let isClicked = 0;
 
       items.forEach((item, index) => {
         item.addEventListener("click", () => {
@@ -109,11 +108,10 @@
 
           setTimeout(() => {
             picture.style.opacity = "1";
-            picture.style.transform = "translate(-50%, -50%) scale(1)";
+            picture.style.transform = "scale(1)";
             document.addEventListener("click", hidePicture);
             document.addEventListener("keyup", handleKeyup);
           }, 200);
-          isClicked = 1;
         });
       });
 
@@ -131,7 +129,6 @@
 
         document.removeEventListener("click", hidePicture);
         document.removeEventListener("keyup", handleKeyup);
-        isClicked = 0;
         setTimeout(() => {
           picture.remove();
           gridContainer.style.display = "grid";
