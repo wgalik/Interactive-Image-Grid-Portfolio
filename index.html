@@ -76,7 +76,6 @@
     </div>
     <script>
       const gridContainer = document.querySelector(".grid-container");
-      const items = document.querySelectorAll(".grid-item");
       const styles = {
         transform: "scale(0.9)",
         opacity: "0",
@@ -88,28 +87,28 @@
         backgroundRepeat: "no-repeat",
       };
 
-      items.forEach((item, index) => {
-        item.addEventListener("click", () => {
-          const picture = document.createElement("div");
-          picture.classList.add(`img_${index + 1}`);
-          picture.classList.add(`picture`);
+      gridContainer.addEventListener("click", (event) => {
+        if (event.target.className === "grid-container") return;
+        const picture = document.createElement("div");
+        const itemClass = event.target.classList[1];
+        picture.classList.add(itemClass);
+        picture.classList.add(`picture`);
 
-          for (let key in styles) {
-            picture.style[key] = styles[key];
-          }
+        for (let key in styles) {
+          picture.style[key] = styles[key];
+        }
 
-          document.body.style.transition = "all 0.3s ease-in-out";
-          document.body.style.backgroundColor = "rgba(0,0,0,0.8)";
-          gridContainer.style.display = "none";
-          document.body.appendChild(picture);
+        document.body.style.transition = "all 0.3s ease-in-out";
+        document.body.style.backgroundColor = "rgba(0,0,0,0.8)";
+        gridContainer.style.display = "none";
+        document.body.appendChild(picture);
 
-          setTimeout(() => {
-            picture.style.opacity = "1";
-            picture.style.transform = "scale(1)";
-            document.addEventListener("click", hidePicture);
-            document.addEventListener("keyup", handleKeyup);
-          }, 200);
-        });
+        setTimeout(() => {
+          picture.style.opacity = "1";
+          picture.style.transform = "scale(1)";
+          document.addEventListener("click", hidePicture);
+          document.addEventListener("keyup", handleKeyup);
+        }, 200);
       });
 
       const handleKeyup = (event) => {
