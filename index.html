@@ -10,12 +10,15 @@
         margin: 0;
         padding: 0;
       }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+      }
 
       .grid-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
         width: 75vw;
         height: 90vh;
         max-width: 700px;
@@ -57,7 +60,7 @@
         background-image: url("okladka\(1\).jpg");
       }
       .img_6 {
-        grid-area: 4 / 2 / 4 / 4;
+        grid-area: 4 / 2 / 5 / 4;
         background-image: url("snowfall-5\(1\).jpg");
       }
     </style>
@@ -90,39 +93,38 @@
       let isClicked = 0;
 
       items.forEach((item, index) => {
-        items[index].onclick = () => {
-          if (!isClicked) {
-            let picture = document.createElement("div");
-            picture.classList.add(`img_${index + 1}`);
-            picture.classList.add(`picture`);
+        item.addEventListener("click", () => {
+          const picture = document.createElement("div");
+          picture.classList.add(`img_${index + 1}`);
+          picture.classList.add(`picture`);
 
-            for (let key in styles) {
-              picture.style[key] = styles[key];
-            }
-            document.body.style.transition = "all 0.3s ease-in-out";
-            document.body.style.backgroundColor = "rgba(0,0,0,0.8)";
-            gridContainer.style.display = "none";
-            document.body.appendChild(picture);
-
-            setTimeout(() => {
-              picture.style.opacity = "1";
-              picture.style.transform = "translate(-50%, -50%) scale(1)";
-              document.addEventListener("click", hidePicture);
-              document.addEventListener("keyup", handleKeyup);
-            }, 200);
-            isClicked = 1;
+          for (let key in styles) {
+            picture.style[key] = styles[key];
           }
-        };
+
+          document.body.style.transition = "all 0.3s ease-in-out";
+          document.body.style.backgroundColor = "rgba(0,0,0,0.8)";
+          gridContainer.style.display = "none";
+          document.body.appendChild(picture);
+
+          setTimeout(() => {
+            picture.style.opacity = "1";
+            picture.style.transform = "translate(-50%, -50%) scale(1)";
+            document.addEventListener("click", hidePicture);
+            document.addEventListener("keyup", handleKeyup);
+          }, 200);
+          isClicked = 1;
+        });
       });
 
-      function handleKeyup(event) {
+      const handleKeyup = (event) => {
         if (event.keyCode === 27 || event.code === "Escape") {
           hidePicture();
         }
-      }
+      };
 
-      function hidePicture() {
-        let picture = document.querySelector(".picture");
+      const hidePicture = () => {
+        const picture = document.querySelector(".picture");
         document.body.style.transition = "all 1s ease-in-out";
         document.body.style.backgroundColor = "rgba(0,0,0,0)";
         picture.style.opacity = "0";
@@ -134,7 +136,7 @@
           picture.remove();
           gridContainer.style.display = "grid";
         }, 200);
-      }
+      };
     </script>
   </body>
 </html>
